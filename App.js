@@ -34,5 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.error('El formulario o el input de arcoíris no se encontraron en el DOM.');
   }
-
 });
+
+function handleSubmit(event) {
+  event.preventDefault();
+  // Lógica del envío del formulario
+}
+
