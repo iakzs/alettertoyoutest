@@ -1,17 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customize ALTY test</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Customize ALTY</title>
 </head>
 <body>
   <h1>Customize alettertoyou</h1>
   <form id="customize-form" enctype="multipart/form-data">
-    <!-- Tu formulario aquí -->
+    <label for="title-input">Title:</label>
+    <input type="text" id="title-input" name="title"><br><br>
+    <label for="text-input">Text:</label>
+    <input type="text" id="text-input" name="text"><br><br>
+    <label for="emoji-input">Emoji:</label>
+    <input type="text" id="emoji-input" name="emoji"><br><br>
+    <label for="background-input">Background:</label>
+    <input type="checkbox" id="background-input" name="background"><br><br>
+    <div id="background-colors" style="display: none;">
+      <label for="background1-color-input">Background Color 1:</label>
+      <input type="color" id="background1-color-input" name="background1-color"><br><br>
+      <label for="background2-color-input">Background Color 2:</label>
+      <input type="color" id="background2-color-input" name="background2-color"><br><br>
+    </div>
+    <label for="font-input">Font:</label>
+    <select id="font-input" name="font">
+      <option value="Delicious Handrawn">Delicious Handrawn</option>
+      <option value="Roboto">Roboto</option>
+      <option value="Open Sans">Open Sans</option>
+    </select><br><br>
+    <button id="preview-button">Preview</button><br><br>
+    <input type="submit" value="Submit"><br><br>
   </form>
 
-  <script src="App.js"></script>
+  <script>
+    // Show/hide background color options based on background checkbox
+    const backgroundCheckbox = document.querySelector('#background-input');
+    const backgroundColorsDiv = document.querySelector('#background-colors');
+
+    backgroundCheckbox.addEventListener('change', () => {
+      if (backgroundCheckbox.checked) {
+        backgroundColorsDiv.style.display = 'none';
+      } else {
+        backgroundColorsDiv.style.display = 'block';
+      }
+    });
+
+    // Preview button functionality
+    const previewButton = document.querySelector('#preview-button');
+    previewButton.addEventListener('click', () => {
+      updatePreview();
+    });
+
+    // Function to update the live preview
+    function updatePreview() {
+      const title = document.querySelector('#title-input').value;
+      const text = document.querySelector('#text-input').value;
+      const emoji = document.querySelector('#emoji-input').value;
+      const backgroundCheckbox = document.querySelector('#background-input').checked;
+      const background1Color = document.querySelector('#background1-color-input').value;
+      const background2Color = document.querySelector('#background2-color-input').value;
+      const font = document.querySelector('#font-input').value;
+
+      const previewContent = document.querySelector('#preview-content');
+      previewContent.innerHTML = '';
+
+      const previewTitle = document.createElement('h1');
+      previewTitle.textContent = title;
+      previewContent.appendChild(previewTitle);
+
+      const previewText = document.createElement('p');
+      previewText.textContent = text + ' ' + emoji;
+      previewContent.appendChild(previewText);
+
+      previewContent.style.fontFamily = font;
+
+      if (backgroundCheckbox) {
+        previewContent.style.background = 'linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet)';
+        previewContent.style.backgroundSize = '400% 400%';
+        previewContent.style.animation = 'rainbow 5s linear infinite';
+      } else {
+        previewContent.style.background = `linear-gradient(to right, ${background1Color}, ${background2Color})`;
+      }
+    }
+       
+ document.querySelector('#rainbow-input').addEventListener('change', (event) => {
+  const rainbowChecked = event.target.checked;
+  document.querySelector('#background-input').disabled = rainbowChecked;
+  document.querySelector('#background2-input').disabled = rainbowChecked;
+});
+document.querySelector('#customize-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const text = document.querySelector('#text-input').value;
+  const emoji = document.querySelector('#emoji-input').value;
+  const color = document.querySelector('#color-input').value;
+  const background = document.querySelector('#background-input').value;
+  const background2 = document.querySelector('#background2-input').value;
+  const title = document.querySelector('#title-input').value;
+  const rainbow = document.querySelector('#rainbow-input').checked;
+  const font = document.querySelector('#font-input').value;
+  const url = `https://iakzs.is-a.dev/alettertoyou?text=${encodeURIComponent(text)}&emoji=${encodeURIComponent(emoji)}&color=${encodeURIComponent(color)}&background=${encodeURIComponent(background)}&background2=${encodeURIComponent(background2)}&title=${encodeURIComponent(title)}&israinbow=${encodeURIComponent(rainbow)}&font=${encodeURIComponent(font)}`;
+  window.location.href = url;
+  });
+  </script>
 </body>
 </html>
